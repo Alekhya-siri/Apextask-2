@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Complete Web Project</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    .navbar {
+      background-color: #333;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 20px;
+    }
+    section {
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+    }
+    form label {
+      display: block;
+      margin-top: 10px;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    form button {
+      margin-top: 15px;
+      padding: 10px;
+      background: #007BFF;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+    form button:hover {
+      background: #0056b3;
+    }
+    .form-error {
+      color: red;
+      margin-top: 10px;
+    }
+    #todoInput {
+      width: 70%;
+      padding: 8px;
+    }
+    #addTodo {
+      padding: 8px 12px;
+      background: #28a745;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+    #addTodo:hover {
+      background: #218838;
+    }
+    #todoList {
+      list-style: none;
+      margin-top: 15px;
+    }
+    #todoList li {
+      padding: 8px;
+      background: #eee;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+    #todoList button {
+      background: red;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #ccc;
+      color: #555;
+    }
+    @media (max-width: 768px) {
+      .grid-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <h1>My Web Project</h1>
+    </nav>
+  </header>
+
+  <main class="grid-container">
+    <!-- Contact Form -->
+    <section class="form-section">
+      <h2>Contact Form</h2>
+      <form id="contactForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required />
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+        
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+        
+        <button type="submit">Submit</button>
+        <p class="form-error" id="formError"></p>
+      </form>
+    </section>
+
+    <!-- To-Do List -->
+    <section class="todo-section">
+      <h2>To-Do List</h2>
+      <input type="text" id="todoInput" placeholder="Enter a task..." />
+      <button id="addTodo">Add Task</button>
+      <ul id="todoList"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 My Web Project</p>
+  </footer>
+
+  <script>
+    // Form Validation
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name');
+      const email = document.getElementById('email');
+      const message = document.getElementById('message');
+      const formError = document.getElementById('formError');
+
+      if (!name.value.trim() || !email.value.trim() || !message.value.trim()) {
+        formError.textContent = 'Please fill in all fields.';
+        return;
+      }
+
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!emailPattern.test(email.value)) {
+        formError.textContent = 'Please enter a valid email address.';
+        return;
+      }
+
+      formError.textContent = '';
+      alert('Form submitted successfully!');
+      this.reset();
+    });
+
+    // To-Do List
+    document.getElementById('addTodo').addEventListener('click', function () {
+      const todoInput = document.getElementById('todoInput');
+      const taskText = todoInput.value.trim();
+      const todoList = document.getElementById('todoList');
+
+      if (taskText === '') return;
+
+      const li = document.createElement('li');
+      li.textContent = taskText;
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = 'Delete';
+      deleteBtn.onclick = () => li.remove();
+
+      li.appendChild(deleteBtn);
+      todoList.appendChild(li);
+      todoInput.value = '';
+    });
+  </script>
+</body>
+</html>
